@@ -13,9 +13,7 @@ dotenv.config()
 mongoose.connect(process.env.MONGO_URL,()=>{
     console.log("connected to db");
 })   
-app.get('/',(req,res)=>{
-    res.send('homepage')
-})
+ 
 app.post("/api/v1/signup",async(req,res)=>{
      
     const emailExist=await signup.findOne({email:req.body.email,})
