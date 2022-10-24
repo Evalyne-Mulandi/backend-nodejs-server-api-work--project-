@@ -16,7 +16,7 @@ mongoose.connect(process.env.MONGO_URL,()=>{
 app.get('/',(req,res)=>{
     res.send('homepage')
 })
-app.post("/signup",async(req,res)=>{
+app.post("/api/v1/signup",async(req,res)=>{
      
     const emailExist=await signup.findOne({email:req.body.email,})
     let value=await req.body.password
@@ -48,7 +48,7 @@ app.post("/signup",async(req,res)=>{
     }
 
 })
-app.post("/login",async (req,res)=>{
+app.post("/api/v1/login",async (req,res)=>{
     const userdt=await signup.findOne({ email:req.body.email})
     if(!userdt){
       return  res.status(400).send({message:"Username not found"})
@@ -63,7 +63,11 @@ app.post("/login",async (req,res)=>{
         }
     }
 })
- 
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(__dirname + "/dist/"));
+    app.get("*", (req, res) => {
+      res.sendFile(__dirname + "/dist/index.html");
+    });}
 
 app.listen(port,(req,res)=>{
     console.log("listening on port" +port);

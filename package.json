@@ -34,7 +34,8 @@
   "scripts": {
   
     
-  "start": "nodemon node_modules/app"
+  "nodemon": "nodemon node_modules/app",
+  "start": "node app.js"
   
   },
   
